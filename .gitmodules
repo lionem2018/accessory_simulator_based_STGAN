@@ -1,0 +1,3 @@
+[submodule "spatial-transformer-GAN"]
+	path = spatial-transformer-GAN
+	url = https://github.com/lionem2018/spatial-transformer-GAN
