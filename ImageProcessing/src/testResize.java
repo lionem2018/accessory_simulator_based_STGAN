@@ -1,9 +1,43 @@
+import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.client.fluent.Response;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 public class testResize {
+
+    static String removebg(String ImagePath) throws IOException{
+
+        String NewFileName = null;
+        Response response = null;
+        Path currentPath = Paths.get("");
+        String path = currentPath.toAbsolutePath().toString() + "/ImageProcessing/Images/";
+        try {
+            response = Request.Post("https://api.remove.bg/v1.0/removebg")
+                    .addHeader("X-Api-Key", "LAK47sCg91CMu1AQ1fvrMkFN ")
+                    .body(
+                           MultipartEntityBuilder.create()
+                                  .addBinaryBody("image_file", new File(ImagePath))
+                                    .addTextBody("size", "auto")
+                                   .build()
+                  ).execute();
+
+            NewFileName = "Images_" + System.currentTimeMillis() + ".jpg";
+            response.saveContent(new File(path + NewFileName));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return NewFileName;
+
+    }
 
 
     static BufferedImage createResizedCopy(Image originalImage,
@@ -97,27 +131,31 @@ public class testResize {
 
 
     public static void main(String[] args) {
-        String imgOriginalPath= "D:/m2j97/Documents/IntelliJ_IDEA/ImageProcessing/Images/test3.png";           // 원본 이미지 파일명
-        String imgTargetPath= "D:/m2j97/Documents/IntelliJ_IDEA/ImageProcessing/Images/test_resize.jpg";    // 새 이미지 파일명
+//      String imgOriginalPath= "C:/Users/HS/Source/Repos/accessory_simulator_based_STGAN/ImageProcessing/Images/test3.png";           // 원본 이미지 파일명
+//      String imgTargetPath= "C:/Users/HS/Source/Repos/accessory_simulator_based_STGAN/ImageProcessing/Images/test_resize.jpg";    // 새 이미지 파일명
+        String newFileName ;
+        Image image;
         int newWidth = 144;                                  // 변경 할 넓이
         int newHeight = 144;                                 // 변경 할 높이
-
-        Image image;
+        Path currentPath = Paths.get("");
+        String ImagePath = currentPath.toAbsolutePath().toString() + "/ImageProcessing/Images/";
 
         try {
             // 원본 이미지 가져오기
-            image = ImageIO.read(new File(imgOriginalPath));
+            newFileName = removebg(ImagePath + "/test3.png");
+            image = ImageIO.read(new File(ImagePath + newFileName));
             BufferedImage scaledImage = createResizedCopy(image, newWidth, newHeight, "H");
 
             //투명 패딩 코드 추가 필요
             BufferedImage resultImage = addPadding(scaledImage, newWidth, newHeight);
 
-            File outFile = new File(imgTargetPath);
+            File outFile = new File(ImagePath + newFileName);
             ImageIO.write(resultImage, "PNG", outFile);
         }catch (Exception e){
 
         e.printStackTrace();
 
         }
+
     }
 }
