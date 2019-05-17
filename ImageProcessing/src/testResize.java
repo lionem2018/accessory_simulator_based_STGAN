@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,13 +31,14 @@ public class testResize {
 
             NewFileName = "Images_" + System.currentTimeMillis() + ".jpg";
             response.saveContent(new File(path + NewFileName));
+
         }
-        catch (IOException e){
+        catch (FileNotFoundException e) {
+            //System.out.println("파일이 존재하지 않습니다.");
             e.printStackTrace();
         }
 
         return NewFileName;
-
     }
 
 
@@ -142,7 +144,7 @@ public class testResize {
 
         try {
             // 원본 이미지 가져오기
-            newFileName = removebg(ImagePath + "/test3.png");
+            newFileName = removebg(ImagePath);
             image = ImageIO.read(new File(ImagePath + newFileName));
             BufferedImage scaledImage = createResizedCopy(image, newWidth, newHeight, "H");
 
@@ -151,10 +153,16 @@ public class testResize {
 
             File outFile = new File(ImagePath + newFileName);
             ImageIO.write(resultImage, "PNG", outFile);
-        }catch (Exception e){
-
-        e.printStackTrace();
-
+        }
+        catch (NullPointerException e){
+            System.out.println("파일이 존재하지 않습니다1");
+        }
+        catch (IOException e){
+            System.out.println("2");
+        }
+        catch (Exception e) {
+            System.out.println("파일이 존재하지 않습니다3");
+            e.printStackTrace();
         }
 
     }
