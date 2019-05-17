@@ -38,6 +38,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private DB_Manger dbmanger;
 
+    private String mode;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         dbmanger = new DB_Manger();
 
         iv_UserPhoto = (ImageView)this.findViewById(R.id.user_image);
-        iv_UserPhoto = (ImageView)this.findViewById(R.id.earring_image);
+        iv_Earring_Photo = (ImageView)this.findViewById(R.id.earring_image);
         Button btn_agree = (Button) this.findViewById(R.id.btn_UploadPicture);
 
         btn_agree.setOnClickListener(this);
@@ -62,7 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         //임시로 사용할 파일의 경로 생성
-        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".png";
         mlmageCaptureUri = Uri.fromFile(new File
                 (Environment.getExternalStorageDirectory(), url));
 
@@ -116,11 +118,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 final Bundle extras = data.getExtras();
                 String filePath = Environment.getDownloadCacheDirectory().getAbsolutePath() +
-                        "/SmartWheel/" + System.currentTimeMillis() + ".jpg";
+                        "/SmartWheel/" + System.currentTimeMillis() + ".png";
 
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
-                    iv_UserPhoto.setImageBitmap(photo);
+
+                    if(mode.equals("user"))
+                        iv_UserPhoto.setImageBitmap(photo);
+                    else if(mode.equals("earring"))
+                        iv_Earring_Photo.setImageBitmap(photo);
 
                     storeCropImage(photo, filePath);
                     absoultePath = filePath;
@@ -172,6 +178,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         id_view = v.getId();
         if (v.getId() == R.id.btn_UploadPicture) {
+            mode="user";
+
             DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -204,6 +212,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         else if (v.getId() == R.id.btn_UploadEarring){
+
+            mode="earring";
+
             DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
