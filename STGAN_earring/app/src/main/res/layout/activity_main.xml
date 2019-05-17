@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="합성하기"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            tools:background="@android:color/holo_blue_dark" />
+        <View
+            android:layout_width="380dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:layout_width="380dp"
+            android:layout_height="20dp"
+            android:gravity="center_vertical"
+            android:text="                사용자 사진                                  귀걸이사진"
+            android:textColor="#FF0000"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="380dp"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20sp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id ="@+id/user_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="left"
+                    android:adjustViewBounds="true"
+                    android:src = "@drawable/picture"
+                    android:onClick="onClick" />
+
+                <Button
+                    android:id="@+id/btn_UploadPicture"
+                    android:layout_width="150dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom"
+                    android:background="#FF0000"
+                    android:onClick="onClick"
+                    android:text="사진선택"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="20sp"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="right"
+                        android:adjustViewBounds="true"
+                        android:src = "@drawable/picture"
+                        android:onClick="onClick" />
+
+                    <Button
+                        android:id="@+id/btn_UploadEarring"
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:background="#FF0000"
+                        android:onClick="onClick"
+                        android:text="사진선택"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="380dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:baselineAligned="false"
+            android:onClick="onClick"
+            android:text="사진합성"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="350dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
