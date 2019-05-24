@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         iv_UserPhoto = (ImageView)this.findViewById(R.id.user_image);
         iv_Earring_Photo = (ImageView)this.findViewById(R.id.earring_image);
+        iv_Earring_Photo.setAdjustViewBounds(true);
+
         Button btn_agree = (Button) this.findViewById(R.id.btn_UploadPicture);
 
         btn_agree.setOnClickListener(this);
@@ -101,11 +103,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent("com.android.camera.action.CROP");
                 intent.setDataAndType(mlmageCaptureUri, "image/*");
 
-                intent.putExtra("outputX", 144);
-                intent.putExtra("outputY", 144);
-                intent.putExtra("aspectX", 1);
-                intent.putExtra("aspectY", 1);
-                intent.putExtra("sale", true);
+                if(mode.equals("user")) {
+                    intent.putExtra("outputX", 144);
+                    intent.putExtra("outputY", 144);
+                    intent.putExtra("aspectX", 1);
+                    intent.putExtra("aspectY", 1);
+                }
+
+                intent.putExtra("scale", true);
                 intent.putExtra("return-data", true);
                 startActivityForResult(intent, CROP_FROM_iMAGE);
                 break;
@@ -127,6 +132,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         iv_UserPhoto.setImageBitmap(photo);
                     else if(mode.equals("earring"))
                         iv_Earring_Photo.setImageBitmap(photo);
+
 
                     storeCropImage(photo, filePath);
                     absoultePath = filePath;
@@ -177,7 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
 
         id_view = v.getId();
-        if (v.getId() == R.id.btn_UploadPicture) {
+        if (v.getId() == R.id.btn_UploadPicture) { //인물 합성 버튼
             mode="user";
 
             DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
@@ -211,7 +217,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
 
-        else if (v.getId() == R.id.btn_UploadEarring){
+        else if (v.getId() == R.id.btn_UploadEarring){ //귀걸이 합성 버튼
 
             mode="earring";
 
@@ -241,6 +247,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     .setNeutralButton("앨범선택", albumListener)
                     .setNegativeButton("취소", cancelListener)
                     .show();
+
+        }
+
+        else if(v.getId()==R.id.button)//합성하기 버튼
+        {
 
         }
 
